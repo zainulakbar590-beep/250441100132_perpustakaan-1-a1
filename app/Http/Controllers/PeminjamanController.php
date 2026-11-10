@@ -50,11 +50,18 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman buku berhasil diajukan!');
     }
 
-    // --- SOAL 1 (A4): Method Detail Peminjaman Tanpa Verification Ownership ---
+    // --- SOAL 2 (A4 Remediation): Method Detail Peminjaman Dengan Validation Ownership ---
     public function show($id)
     {
-        // Mengambil data peminjaman beserta relasi user & buku tanpa filter Auth::id()
-        $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
+        $user = Auth::user();
+
+        if ($user->hasRole(['admin', 'petugas'])) {
+            $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
+        } else {
+            $peminjaman = Peminjaman::with(['user', 'buku'])
+                ->where('user_id', $user->id)
+                ->findOrFail($id);
+        }
 
         return view('peminjaman.show', compact('peminjaman'));
     }
@@ -72,4 +79,4 @@ class PeminjamanController extends Controller
 
         return redirect()->back()->with('success', 'Buku berhasil dikembalikan!');
     }
-}
+}   

@@ -57,7 +57,7 @@
                                     </td>
 
                                     <!-- Penggunaan Objek Eloquent ($buku->field) -->
-                                    <td style="padding: 10px; border: 1px solid #ddd;">{!! $buku->judul !!}</td>
+                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $buku->judul }}</td>
                                     <td style="padding: 10px; border: 1px solid #ddd;">{{ $buku->penulis }}</td>
                                     <td style="padding: 10px; text-align:center; border: 1px solid #ddd;">{{ $buku->tahun_terbit }}</td>
                                     

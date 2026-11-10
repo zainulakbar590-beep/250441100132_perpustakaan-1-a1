@@ -73,15 +73,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/peminjaman/{id}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
     });
 
-    // --- SOAL 1 (A2): Route Pencarian Buku dengan Query SQL Langsung ---
+    // --- SOAL 2 (A2 Remediasi): Route Pencarian Buku Menggunakan Parameter Binding (Aman) ---
     Route::get('/buku-cari', function (Request $request) {
         $judul = $request->query('judul');
-        $buku = DB::select("SELECT * FROM bukus WHERE judul = '$judul'");
+        $buku = DB::select("SELECT * FROM bukus WHERE judul = ?", [$judul]);
         return response()->json($buku);
     })->name('buku.cari');
-
-    // --- SOAL 1 (A3): Route Penghapusan Buku via Method GET ---
-    Route::get('/buku/{buku}/hapus', [BukuController::class, 'destroy'])->name('buku.hapus.vulnerable');
 
     // --- SOAL 1 (A4): Route Detail Peminjaman (Wajib ditaruh PALING BAWAH) ---
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])->name('peminjaman.show');
