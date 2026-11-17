@@ -86,3 +86,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route::get('/uji-error', function () {
+//     throw new \RuntimeException('Uji coba error production');
+// });
+
+
