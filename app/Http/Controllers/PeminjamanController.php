@@ -6,6 +6,7 @@ use App\Models\Peminjaman;
 use App\Models\Buku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Carbon\Carbon;
 
 class PeminjamanController extends Controller
@@ -50,18 +51,12 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman buku berhasil diajukan!');
     }
 
-    // --- SOAL 2 (A4 Remediation): Method Detail Peminjaman Dengan Validation Ownership ---
+    // --- SOAL 4 (A4 Remediation): Otorisasi Menggunakan PeminjamanPolicy ---
     public function show($id)
     {
-        $user = Auth::user();
+        $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
 
-        if ($user->hasRole(['admin', 'petugas'])) {
-            $peminjaman = Peminjaman::with(['user', 'buku'])->findOrFail($id);
-        } else {
-            $peminjaman = Peminjaman::with(['user', 'buku'])
-                ->where('user_id', $user->id)
-                ->findOrFail($id);
-        }
+        Gate::authorize('view', $peminjaman);
 
         return view('peminjaman.show', compact('peminjaman'));
     }
@@ -79,4 +74,4 @@ class PeminjamanController extends Controller
 
         return redirect()->back()->with('success', 'Buku berhasil dikembalikan!');
     }
-}   
+}

@@ -50,8 +50,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
     });
 
-    // 5. ROUTE KELOLA DATA BUKU (Admin & Petugas)
-    Route::middleware(['role:admin|petugas'])->group(function () {
+    // 5. ROUTE KELOLA DATA BUKU (Admin & Petugas melalui Gate)
+    Route::middleware(['can:kelola-buku'])->group(function () {
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');

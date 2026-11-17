@@ -12,9 +12,9 @@
 
                     <div class="page-title mb-4 flex justify-between items-center">
                         <p class="text-gray-600">Koleksi buku</p>
-                        @role('admin|petugas')
+                        @can('kelola-buku')
                             <a href="{{ route('buku.create') }}" style="background: #28a745; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px;">+ Tambah Buku</a>
-                        @endrole
+                        @endcan
                     </div>
 
                     <!-- NOTIFIKASI SUKSES ATAU ERROR -->
@@ -75,14 +75,14 @@
                                             </form>
                                         @endrole
 
-                                        @role('admin|petugas')
+                                        @can('kelola-buku')
                                             <a href="{{ route('buku.edit', $buku->id) }}" style="background: #ffc107; color: black; padding: 4px 10px; text-decoration: none; border-radius: 3px; font-size: 12px; font-weight: bold; margin-right: 5px;">Edit</a>
                                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirm('Hapus buku ini?')" style="background: #dc3545; color: white; border: none; padding: 4px 10px; cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: bold;">Hapus</button>
                                             </form>
-                                        @endrole
+                                        @endcan
                                     </td>
                                 </tr>
                             @empty

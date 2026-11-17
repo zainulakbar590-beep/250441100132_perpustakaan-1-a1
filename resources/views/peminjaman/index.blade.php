@@ -26,7 +26,7 @@
                         <thead style="background: #f8f9fa;">
                             <tr>
                                 <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">No</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Nama Peminjam</th> <!-- Ditambahkan -->
+                                <th style="padding: 10px; border: 1px solid #ddd;">Nama Peminjam</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Judul Buku</th>
                                 <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Tanggal Pinjam</th>
                                 <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Tanggal Kembali</th>
@@ -39,7 +39,6 @@
                                 <tr>
                                     <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">{{ $index + 1 }}</td>
                                     
-                                    <!-- DITAMBAHKAN: Menampilkan Nama Peminjam -->
                                     <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold; color: #333;">
                                         {{ $item->user->name ?? '-' }}
                                     </td>
@@ -61,7 +60,14 @@
                                             {{ $item->status }}
                                         </span>
                                     </td>
+
                                     <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">
+                                        <!-- Tombol Detail untuk semua role (Siswa, Petugas, Admin) -->
+                                        <a href="{{ route('peminjaman.show', $item->id) }}" style="background: #17a2b8; color: white; text-decoration: none; padding: 4px 10px; border-radius: 3px; font-size: 12px; font-weight: bold; margin-right: 4px; display: inline-block;">
+                                            Detail
+                                        </a>
+
+                                        <!-- Tombol Kembalikan khusus Admin & Petugas -->
                                         @role('admin|petugas')
                                             @if($item->status == 'Dipinjam')
                                                 <form action="{{ route('peminjaman.kembalikan', $item->id) }}" method="POST" style="display:inline;">
@@ -74,8 +80,6 @@
                                             @else
                                                 <span style="color: gray; font-size: 12px;">Selesai</span>
                                             @endif
-                                        @else
-                                            <span style="color: gray; font-size: 12px;">-</span>
                                         @endrole
                                     </td>
                                 </tr>
