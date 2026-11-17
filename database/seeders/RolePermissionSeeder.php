@@ -68,12 +68,12 @@ class RolePermissionSeeder extends Seeder
             'Melihat riwayat peminjaman sendiri', 'Lihat profil sendiri', 'Ubah profil sendiri'
         ]);
 
-        // 4. Membuat Akun Dummy untuk Pengujian (Password otomatis di-hash)
-        $admin = User::firstOrCreate([
+        // 4. Membuat / Memperbarui Akun Dummy (Password Admin diganti menjadi kuat untuk Soal 5c)
+        $admin = User::updateOrCreate([
             'email' => 'admin@perpus.com'
         ], [
             'name' => 'Super Admin',
-            'password' => Hash::make('password123') // Disimpan menggunakan mekanisme hashing sesuai ketentuan modul
+            'password' => Hash::make('AdminPerpus#250441100132')
         ]);
         $admin->assignRole('admin');
 
