@@ -12,7 +12,7 @@
 
                     <div class="page-title mb-4 flex justify-between items-center">
                         <p class="text-gray-600">Koleksi buku</p>
-                        @can('kelola-buku')
+                        @can('Kelola data buku')
                             <a href="{{ route('buku.create') }}" style="background: #28a745; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 14px;">+ Tambah Buku</a>
                         @endcan
                     </div>
@@ -34,7 +34,6 @@
                     <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
                         <thead style="background: #f8f9fa;">
                             <tr>
-                                <!-- DITAMBAHKAN HEADER KOLOM ID -->
                                 <th style="padding: 10px; border: 1px solid #ddd;">ID</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Kategori</th>
                                 <th style="padding: 10px; border: 1px solid #ddd;">Judul</th>
@@ -46,17 +45,14 @@
                         <tbody>
                             @forelse($books as $buku)
                                 <tr>
-                                    <!-- DITAMBAHKAN MENAMPILKAN ID BUKU -->
                                     <td style="padding: 10px; text-align:center; border: 1px solid #ddd; font-weight: bold;">
                                         {{ $buku->id }}
                                     </td>
 
-                                    <!-- Menampilkan NAMA Kategori dari Relasi -->
                                     <td style="padding: 10px; text-align:center; border: 1px solid #ddd;">
                                         {{ $buku->kategori->nama ?? '-' }}
                                     </td>
 
-                                    <!-- Penggunaan Objek Eloquent ($buku->field) -->
                                     <td style="padding: 10px; border: 1px solid #ddd;">{{ $buku->judul }}</td>
                                     <td style="padding: 10px; border: 1px solid #ddd;">{{ $buku->penulis }}</td>
                                     <td style="padding: 10px; text-align:center; border: 1px solid #ddd;">{{ $buku->tahun_terbit }}</td>
@@ -75,7 +71,7 @@
                                             </form>
                                         @endrole
 
-                                        @can('kelola-buku')
+                                        @can('Kelola data buku')
                                             <a href="{{ route('buku.edit', $buku->id) }}" style="background: #ffc107; color: black; padding: 4px 10px; text-decoration: none; border-radius: 3px; font-size: 12px; font-weight: bold; margin-right: 5px;">Edit</a>
                                             <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display:inline;">
                                                 @csrf

@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // 5. ROUTE KELOLA DATA BUKU (Admin & Petugas melalui Gate)
-    Route::middleware(['can:kelola-buku'])->group(function () {
+    Route::middleware(['can:Kelola data buku'])->group(function () {
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
@@ -86,9 +86,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-// Route::get('/uji-error', function () {
-//     throw new \RuntimeException('Uji coba error production');
-// });
-
-
